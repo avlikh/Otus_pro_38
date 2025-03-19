@@ -30,160 +30,252 @@ apt update -y && apt install git -y ; git clone https://github.com/avlikh/Otus_p
 vagrant up
 ```
 <details>
-<summary> Результатом выполнения команды vagrant up станут созданные и настроенные 3 виртуальные машины: </summary>    
-* ipa.otus.lan
-* client1.otus.lan
-* client2.otus.lan
+<summary> Результатом выполнения команды vagrant up станут созданные и настроенные 3 виртуальные машины: </summary>
 
 ```
-root@deb4likh:/opt/otus/backup# vagrant up
-Bringing machine 'backup' up with 'virtualbox' provider...
-Bringing machine 'client' up with 'virtualbox' provider...
-==> backup: Importing base box 'debian/bookworm64'...
-==> backup: Matching MAC address for NAT networking...
-==> backup: Checking if box 'debian/bookworm64' version '12.20240905.1' is up to date...
-==> backup: A newer version of the box 'debian/bookworm64' for provider 'virtualbox' is
-==> backup: available! You currently have version '12.20240905.1'. The latest is version
-==> backup: '12.20250126.1'. Run `vagrant box update` to update.
-==> backup: Setting the name of the VM: backup_backup_1742293516341_82645
-==> backup: Clearing any previously set network interfaces...
-==> backup: Preparing network interfaces based on configuration...
-    backup: Adapter 1: nat
-    backup: Adapter 2: hostonly
-==> backup: Forwarding ports...
-    backup: 22 (guest) => 2222 (host) (adapter 1)
-==> backup: Configuring storage mediums...
-    backup: Disk 'backup' not found in guest. Creating and attaching disk to guest...
-==> backup: Running 'pre-boot' VM customizations...
-==> backup: Booting VM...
-==> backup: Waiting for machine to boot. This may take a few minutes...
-    backup: SSH address: 127.0.0.1:2222
-    backup: SSH username: vagrant
-    backup: SSH auth method: private key
-    backup: Warning: Remote connection disconnect. Retrying...
-    backup: Warning: Connection reset. Retrying...
-    backup:
-    backup: Vagrant insecure key detected. Vagrant will automatically replace
-    backup: this with a newly generated keypair for better security.
-    backup:
-    backup: Inserting generated public key within guest...
-    backup: Removing insecure key from the guest if it's present...
-    backup: Key inserted! Disconnecting and reconnecting using new SSH key...
-==> backup: Machine booted and ready!
-==> backup: Checking for guest additions in VM...
-    backup: The guest additions on this VM do not match the installed version of
-    backup: VirtualBox! In most cases this is fine, but in rare cases it can
-    backup: prevent things such as shared folders from working properly. If you see
-    backup: shared folder errors, please make sure the guest additions within the
-    backup: virtual machine match the version of VirtualBox you have installed on
-    backup: your host and reload your VM.
-    backup:
-    backup: Guest Additions Version: 6.0.0 r127566
-    backup: VirtualBox Version: 7.1
-==> backup: Setting hostname...
-==> backup: Configuring and enabling network interfaces...
-==> backup: Mounting shared folders...
-    backup: /opt/otus/backup => /vagrant
-==> backup: Running provisioner: shell...
-    backup: Running: inline script
-..........
-==> client: Running provisioner: ansible...
-    client: Running ansible-playbook...
-
-PLAY [Install Borg] ************************************************************
-
-TASK [Gathering Facts] *********************************************************
-ok: [backup]
-ok: [client]
-
-TASK [install : install_borg] **************************************************
-changed: [backup]
-changed: [client]
-
-PLAY [Configure server] ********************************************************
-
-TASK [Gathering Facts] *********************************************************
-ok: [backup]
-
-TASK [server : Create user borg] ***********************************************
-changed: [backup]
-
-TASK [server : check and setup dir /var/backup] ********************************
-changed: [backup]
-
-TASK [server : clean dir /var/backup] ******************************************
-changed: [backup]
-
-PLAY [Configure ssh] ***********************************************************
-
-TASK [Gathering Facts] *********************************************************
-ok: [backup]
-
-TASK [ssh_key : SSH  Disable confirmation for add ssh-key в known_hosts] *******
-changed: [backup -> client(192.168.56.12)]
-
-TASK [ssh_key : Generate SSH key for client (if none)] *************************
-changed: [backup -> client(192.168.56.12)]
-
-TASK [ssh_key : Get public key from client] ************************************
-ok: [backup -> client(192.168.56.12)]
-
-TASK [ssh_key : Create directory (if none)] ************************************
-changed: [backup]
-
-TASK [ssh_key : Add public key client into authorized_keys in backup host] *****
-changed: [backup]
-
-RUNNING HANDLER [ssh_key : restart_ssh] ****************************************
-changed: [backup]
-
-PLAY [Init Repo] ***************************************************************
-
-TASK [Gathering Facts] *********************************************************
-ok: [client]
-
-TASK [init_repo : Repository init] *********************************************
-changed: [client]
-
-PLAY [Install service & timer] *************************************************
-
-TASK [Gathering Facts] *********************************************************
-ok: [client]
-
-TASK [service : Create service from template] **********************************
-changed: [client]
-
-TASK [service : Create timer from template] ************************************
-changed: [client]
-
-TASK [service : run and enable timer] ******************************************
-changed: [client]
-
-TASK [service : run backup first time so timer will have first record] *********
-changed: [client]
-
-PLAY RECAP *********************************************************************
-backup                     : ok=13   changed=9    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-client                     : ok=9    changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-
-
-==> backup: Machine 'backup' has a post `vagrant up` message. This is a message
-==> backup: from the creator of the Vagrantfile, and not from Vagrant itself:
-==> backup:
-==> backup: Vanilla Debian box. See https://app.vagrantup.com/debian for help and bug reports
-
-==> client: Machine 'client' has a post `vagrant up` message. This is a message
-==> client: from the creator of the Vagrantfile, and not from Vagrant itself:
-==> client:
-==> client: Vanilla Debian box. See https://app.vagrantup.com/debian for help and bug reports
-
+root@deb4likh:/opt/otus/ldap# vagrant up
+Bringing machine 'ipa.otus.lan' up with 'virtualbox' provider...
+Bringing machine 'client1.otus.lan' up with 'virtualbox' provider...
+Bringing machine 'client2.otus.lan' up with 'virtualbox' provider...
+==> ipa.otus.lan: Importing base box 'generic/centos8'...
+==> ipa.otus.lan: Matching MAC address for NAT networking...
+==> ipa.otus.lan: Checking if box 'generic/centos8' version '4.3.12' is up to date...
+==> ipa.otus.lan: Setting the name of the VM: ldap_ipaotuslan_1742425241710_5949
+==> ipa.otus.lan: Clearing any previously set network interfaces...
+==> ipa.otus.lan: Preparing network interfaces based on configuration...
+    ipa.otus.lan: Adapter 1: nat
+    ipa.otus.lan: Adapter 2: hostonly
+==> ipa.otus.lan: You are trying to forward to privileged ports (ports <= 1024). Most
+==> ipa.otus.lan: operating systems restrict this to only privileged process (typically
+==> ipa.otus.lan: processes running as an administrative user). This is a warning in case
+==> ipa.otus.lan: the port forwarding doesn't work. If any problems occur, please try a
+==> ipa.otus.lan: port higher than 1024.
+==> ipa.otus.lan: Forwarding ports...
+    ipa.otus.lan: 443 (guest) => 443 (host) (adapter 1)
+    ipa.otus.lan: 22 (guest) => 2222 (host) (adapter 1)
+==> ipa.otus.lan: Running 'pre-boot' VM customizations...
+==> ipa.otus.lan: Booting VM...
+==> ipa.otus.lan: Waiting for machine to boot. This may take a few minutes...
+    ipa.otus.lan: SSH address: 127.0.0.1:2222
+    ipa.otus.lan: SSH username: vagrant
+    ipa.otus.lan: SSH auth method: private key
+    ipa.otus.lan:
+    ipa.otus.lan: Vagrant insecure key detected. Vagrant will automatically replace
+    ipa.otus.lan: this with a newly generated keypair for better security.
+    ipa.otus.lan:
+    ipa.otus.lan: Inserting generated public key within guest...
+    ipa.otus.lan: Removing insecure key from the guest if it's present...
+    ipa.otus.lan: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> ipa.otus.lan: Machine booted and ready!
+==> ipa.otus.lan: Checking for guest additions in VM...
+    ipa.otus.lan: The guest additions on this VM do not match the installed version of
+    ipa.otus.lan: VirtualBox! In most cases this is fine, but in rare cases it can
+    ipa.otus.lan: prevent things such as shared folders from working properly. If you see
+    ipa.otus.lan: shared folder errors, please make sure the guest additions within the
+    ipa.otus.lan: virtual machine match the version of VirtualBox you have installed on
+    ipa.otus.lan: your host and reload your VM.
+    ipa.otus.lan:
+    ipa.otus.lan: Guest Additions Version: 6.1.30
+    ipa.otus.lan: VirtualBox Version: 7.1
+==> ipa.otus.lan: Setting hostname...
+==> ipa.otus.lan: Configuring and enabling network interfaces...
+==> client1.otus.lan: Importing base box 'centos/stream9'...
+==> client1.otus.lan: Matching MAC address for NAT networking...
+==> client1.otus.lan: Checking if box 'centos/stream9' version '20250310.0' is up to date...
+==> client1.otus.lan: Setting the name of the VM: ldap_client1otuslan_1742425303905_10780
+==> client1.otus.lan: Fixed port collision for 22 => 2222. Now on port 2200.
+==> client1.otus.lan: Clearing any previously set network interfaces...
+==> client1.otus.lan: Preparing network interfaces based on configuration...
+    client1.otus.lan: Adapter 1: nat
+    client1.otus.lan: Adapter 2: hostonly
+==> client1.otus.lan: Forwarding ports...
+    client1.otus.lan: 22 (guest) => 2200 (host) (adapter 1)
+==> client1.otus.lan: Running 'pre-boot' VM customizations...
+==> client1.otus.lan: Booting VM...
+==> client1.otus.lan: Waiting for machine to boot. This may take a few minutes...
+    client1.otus.lan: SSH address: 127.0.0.1:2200
+    client1.otus.lan: SSH username: vagrant
+    client1.otus.lan: SSH auth method: private key
+    client1.otus.lan:
+    client1.otus.lan: Vagrant insecure key detected. Vagrant will automatically replace
+    client1.otus.lan: this with a newly generated keypair for better security.
+    client1.otus.lan:
+    client1.otus.lan: Inserting generated public key within guest...
+    client1.otus.lan: Removing insecure key from the guest if it's present...
+    client1.otus.lan: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> client1.otus.lan: Machine booted and ready!
+==> client1.otus.lan: Checking for guest additions in VM...
+    client1.otus.lan: No guest additions were detected on the base box for this VM! Guest
+    client1.otus.lan: additions are required for forwarded ports, shared folders, host only
+    client1.otus.lan: networking, and more. If SSH fails on this machine, please install
+    client1.otus.lan: the guest additions and repackage the box to continue.
+    client1.otus.lan:
+    client1.otus.lan: This is not an error message; everything may continue to work properly,
+    client1.otus.lan: in which case you may ignore this message.
+==> client1.otus.lan: Setting hostname...
+==> client1.otus.lan: Configuring and enabling network interfaces...
+==> client1.otus.lan: Rsyncing folder: /opt/otus/ldap/ => /vagrant
+==> client2.otus.lan: Importing base box 'centos/stream9'...
+==> client2.otus.lan: Matching MAC address for NAT networking...
+==> client2.otus.lan: Checking if box 'centos/stream9' version '20250310.0' is up to date...
+==> client2.otus.lan: Setting the name of the VM: ldap_client2otuslan_1742425361785_78305
+==> client2.otus.lan: Fixed port collision for 22 => 2222. Now on port 2201.
+==> client2.otus.lan: Clearing any previously set network interfaces...
+==> client2.otus.lan: Preparing network interfaces based on configuration...
+    client2.otus.lan: Adapter 1: nat
+    client2.otus.lan: Adapter 2: hostonly
+==> client2.otus.lan: Forwarding ports...
+    client2.otus.lan: 22 (guest) => 2201 (host) (adapter 1)
+==> client2.otus.lan: Running 'pre-boot' VM customizations...
+==> client2.otus.lan: Booting VM...
+==> client2.otus.lan: Waiting for machine to boot. This may take a few minutes...
+    client2.otus.lan: SSH address: 127.0.0.1:2201
+    client2.otus.lan: SSH username: vagrant
+    client2.otus.lan: SSH auth method: private key
+    client2.otus.lan:
+    client2.otus.lan: Vagrant insecure key detected. Vagrant will automatically replace
+    client2.otus.lan: this with a newly generated keypair for better security.
+    client2.otus.lan:
+    client2.otus.lan: Inserting generated public key within guest...
+    client2.otus.lan: Removing insecure key from the guest if it's present...
+    client2.otus.lan: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> client2.otus.lan: Machine booted and ready!
+==> client2.otus.lan: Checking for guest additions in VM...
+    client2.otus.lan: No guest additions were detected on the base box for this VM! Guest
+    client2.otus.lan: additions are required for forwarded ports, shared folders, host only
+    client2.otus.lan: networking, and more. If SSH fails on this machine, please install
+    client2.otus.lan: the guest additions and repackage the box to continue.
+    client2.otus.lan:
+    client2.otus.lan: This is not an error message; everything may continue to work properly,
+    client2.otus.lan: in which case you may ignore this message.
+==> client2.otus.lan: Setting hostname...
+==> client2.otus.lan: Configuring and enabling network interfaces...
+==> client2.otus.lan: Rsyncing folder: /opt/otus/ldap/ => /vagrant
+==> client2.otus.lan: Running provisioner: ansible...
+    client2.otus.lan: Running ansible-playbook...
 ```
 </details>
     
     
-* **backup** 
-* **client** 
+* **ipa.otus.lan** 
+* **client1.otus.lan**
+* **client2.otus.lan**    
 
+
+<details>
+<summary> Далее, запустится Ansible-playbook provision.yml, который сделает сдедующее: </summary>
+    
+```
+PLAY [install base soft, setup time, disable selinux and filerwall] ************
+
+TASK [Gathering Facts] *********************************************************
+ok: [client2.otus.lan]
+ok: [client1.otus.lan]
+ok: [ipa.otus.lan]
+
+TASK [forall : install softs on CentOS] ****************************************
+changed: [client2.otus.lan]
+changed: [client1.otus.lan]
+changed: [ipa.otus.lan]
+
+TASK [forall : disable firewalld] **********************************************
+ok: [client2.otus.lan]
+ok: [client1.otus.lan]
+changed: [ipa.otus.lan]
+
+TASK [forall : disable SElinux now] ********************************************
+changed: [client2.otus.lan]
+changed: [client1.otus.lan]
+changed: [ipa.otus.lan]
+
+TASK [forall : disable SElinux] ************************************************
+[WARNING]: SELinux state change will take effect next reboot
+changed: [client2.otus.lan]
+changed: [client1.otus.lan]
+changed: [ipa.otus.lan]
+
+TASK [forall : Set up timezone] ************************************************
+changed: [client2.otus.lan]
+changed: [client1.otus.lan]
+changed: [ipa.otus.lan]
+
+TASK [forall : enable chrony] **************************************************
+changed: [client2.otus.lan]
+changed: [client1.otus.lan]
+changed: [ipa.otus.lan]
+
+TASK [forall : change /etc/hosts] **********************************************
+changed: [client1.otus.lan]
+changed: [client2.otus.lan]
+changed: [ipa.otus.lan]
+
+PLAY [Server setup] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [ipa.otus.lan]
+
+TASK [server : Disable IPv6 via sysctl] ****************************************
+changed: [ipa.otus.lan]
+
+TASK [server : Restart networking] *********************************************
+changed: [ipa.otus.lan]
+
+TASK [server : install DL1 module, ipa-server, expect] *************************
+changed: [ipa.otus.lan]
+
+TASK [server : Run ipa-server-install in unattended mode] **********************
+changed: [ipa.otus.lan]
+
+TASK [server : Authenticate with Kerberos using kinit] *************************
+changed: [ipa.otus.lan]
+
+TASK [server : Check Kerberos ticket] ******************************************
+changed: [ipa.otus.lan]
+
+TASK [server : debug] **********************************************************
+ok: [ipa.otus.lan] => {
+    "msg": "Ticket cache: KCM:0\nDefault principal: admin@OTUS.LAN\n\nValid starting       Expires              Service principal\n03/20/2025 02:14:11  03/21/2025 02:14:11  krbtgt/OTUS.LAN@OTUS.LAN"
+}
+
+TASK [server : Create user otus-user] ******************************************
+changed: [ipa.otus.lan]
+
+PLAY [Clients setup] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [client1.otus.lan]
+ok: [client2.otus.lan]
+
+TASK [clients : install module ipa-client] *************************************
+changed: [client1.otus.lan]
+changed: [client2.otus.lan]
+
+TASK [clients : add client1.otus.lan to ipa-server using admin] ****************
+skipping: [client2.otus.lan]
+changed: [client1.otus.lan]
+
+TASK [clients : add client2.otus.lan to ipa-server using otus-user] ************
+skipping: [client1.otus.lan]
+changed: [client2.otus.lan]
+
+PLAY RECAP *********************************************************************
+client1.otus.lan           : ok=11   changed=8    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+client2.otus.lan           : ok=11   changed=8    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+ipa.otus.lan               : ok=17   changed=14   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+</details>
+    
+    
+    
+* Установит все необходимые пакеты на сервера
+* Отключит SELinux
+* **ipa.otus.lan** Выключит IPv6 на loopback-интерфейсе (необходимо для установки сервера FreeIPA)
+* **ipa.otus.lan** Установит сервер FreeIPA (пароль пользователя admin: Otus1234)
+* **ipa.otus.lan** Создаст пользователя otus-user на сервере FreeIPA (пароль пользователя otus-user: Otus1234)
+* **ipa.otus.lan** Создаст kerberos ticket for tickets
+* **client1.otus.lan и client2.otus.lan** Установит клиент FreeIPA
+* **client1.otus.lan** Подключит данный сервер к серверу FreeIPA используя пользователя **admin**  
+* **client2.otus.lan** Подключит данный сервер к серверу FreeIPA используя пользователя **otus-user**
 ---
 
 ## Выполнение задания:
