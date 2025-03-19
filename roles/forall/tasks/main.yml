@@ -1,0 +1,50 @@
+---
+  - name: install softs on CentOS
+    yum:
+      name:
+        - chrony
+        - mc
+        - curl
+        - python3-pexpect
+      state: present
+      update_cache: true
+
+  #Отключение firewalld и удаление его из автозагрузки
+  - name: disable firewalld
+    service:
+      name: firewalld
+      state: stopped
+      enabled: false
+      
+ #Отключение SElinux до перезагрузки
+  - name: disable SElinux now
+    shell: setenforce 0
+    when: ( ansible_facts.selinux.status != "disabled")
+
+  #Отключение SElinux из автозагрузки
+  #Будет применено после перезагрузки
+  - name: disable SElinux
+    selinux:
+      state: disabled
+
+  #Установка временной зоны Европа/Москва
+  - name: Set up timezone
+    timezone:
+      name: "Europe/Moscow"
+
+  #Запуск службы Chrony, добавление её в автозагрузку
+  - name: enable chrony
+    service:
+      name: chronyd
+      state: restarted
+      enabled: true
+
+  #Копирование файла /etc/hosts c правами root:root 0644
+  - name: change /etc/hosts
+    template:
+      src: hosts.j2
+      dest: /etc/hosts
+      owner: root
+      group: root
+      mode: 0644
+...

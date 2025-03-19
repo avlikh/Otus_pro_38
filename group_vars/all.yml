@@ -1,0 +1,10 @@
+---
+# defaults vars for IPA Server
+hostname: ipa.otus.lan
+domain: otus.lan
+realm: OTUS.LAN
+ds_password: Otus1234
+admin_password: Otus1234
+netbios_name: OTUS
+otususer: Otus1234
+...

@@ -1,0 +1,25 @@
+---
+- name: install base soft, setup time, disable selinux and filerwall
+  hosts: all
+  gather_facts: yes
+  become: yes
+  roles:
+    - forall
+  tags: forall
+
+- name: Server setup
+  hosts: ipa.otus.lan
+  gather_facts: yes
+  become: yes
+  roles:
+    - server
+  tags: server
+
+- name: Clients setup
+  hosts: client1.otus.lan, client2.otus.lan
+  gather_facts: yes
+  become: yes
+  roles:
+    - clients
+  tags: clients
+...

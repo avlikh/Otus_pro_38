@@ -1,0 +1,48 @@
+---
+  - name: Disable IPv6 via sysctl
+    ansible.builtin.sysctl:
+      name: "net.ipv6.conf.lo.disable_ipv6"
+      value: "0"
+      state: present
+      reload: true
+
+  - name: Restart networking
+    ansible.builtin.systemd:
+      name: NetworkManager
+      state: restarted
+
+  - name: install DL1 module, ipa-server, expect
+    yum:
+      name: 
+        - "@idm:DL1"
+        - ipa-server
+        - python3-pexpect
+      state: present
+      update_cache: true
+
+  - name: Run ipa-server-install in unattended mode
+    command:
+      cmd: ipa-server-install --unattended --hostname={{ hostname }} --domain={{ domain }} --realm={{ realm }} --ds-password={{ ds_password }} --admin-password={{ admin_password }} --netbios-name={{ netbios_name }}
+
+  - name: Authenticate with Kerberos using kinit
+    expect:
+      command: kinit admin
+      responses:
+        "Password for admin@OTUS.LAN:": "{{ admin_password }}"
+    no_log: true
+
+  - name: Check Kerberos ticket
+    command: klist
+    register: klist_output
+
+  - debug:
+      msg: "{{ klist_output.stdout }}"
+
+  - name: Create user otus-user
+    expect:
+      command: ipa user-add otus-user --first=Otus --last=User --password
+      responses:
+        "Password:": "{{ otususer }}"
+        "Enter Password again to verify:": "{{ otususer }}"
+#    no_log: true
+...

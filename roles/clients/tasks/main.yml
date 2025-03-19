@@ -1,0 +1,20 @@
+---
+  #Установка клиента Freeipa
+  - name: install module ipa-client
+    yum:
+      name:
+        - freeipa-client
+      state: present
+      update_cache: true
+
+  #Запуск скрипта добавления хоста к серверу для client1.otus.lan
+  - name: add client1.otus.lan to ipa-server using admin
+    shell: echo -e "yes\nyes" | ipa-client-install --mkhomedir --domain=OTUS.LAN --server=ipa.otus.lan --no-ntp -p admin -w {{ admin_password }}
+    when: inventory_hostname == "client1.otus.lan"
+
+
+  #Запуск скрипта добавления хоста к серверу для client2.otus.lan
+  - name: add client2.otus.lan to ipa-server using otus-user
+    shell: echo -e "yes\nyes" | ipa-client-install --mkhomedir --domain=OTUS.LAN --server=ipa.otus.lan --no-ntp -p admin -w {{ otususer }}
+    when: inventory_hostname == "client2.otus.lan"
+...
